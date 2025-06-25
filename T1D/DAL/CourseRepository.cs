@@ -16,6 +16,13 @@ public class CourseRepository :  ICourseRepository
     {
         return await _context.Courses.Include(c => c.Students).ToListAsync();
     }
+    
+    public async Task<IEnumerable<Course>> GetAllWithStudentsAsync()
+    {
+        return await _context.Courses
+            .Include(c => c.Students)
+            .ToListAsync();
+    }
 
     public async Task<Course?> GetByIdAsync(Guid id)
     {

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using T1D.DAL;
+using T1D.Extensions;
 using T1D.Models;
 using T1D.Models.DTO;
 
@@ -22,8 +23,10 @@ public class CoursesController : Controller
     [HttpGet]
     public async Task<IActionResult> GetCourses()
     {
-        var courses = await _courseRepository.GetAllAsync();
-        return Ok(courses);
+        var courses = await _courseRepository.GetAllWithStudentsAsync();
+        var courseDtos = courses.Select(c => c.ToDto()).ToList();
+        
+        return Ok(courseDtos);
     }
     
     [HttpPost]
