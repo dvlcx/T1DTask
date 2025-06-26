@@ -66,8 +66,8 @@ public class CoursesController : Controller
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCourse(Guid id)
     {
-        var course = await _courseRepository.GetByIdAsync(id);
-        if (course == null)
+        var courseExists = await _courseRepository.ExistsAsync(id);
+        if (!courseExists)
         {
             return NotFound();
         }
